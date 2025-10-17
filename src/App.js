@@ -15,6 +15,14 @@ class App {
 
       // 3번 & 4번 로직 호출 및 반환 값 받음
       const splitNumberString = this.processAndValidate(input);
+
+      // 5. 계산 및 호출
+      const sum = splitNumberString.reduce((sum, str) => {
+        return sum + Number(str);
+      }, 0);
+
+      // 출력
+      Console.print(`결과 : ${sum}`);
     } catch (error) {}
   }
   // 3. 문자열 파싱 & 4. 유효성 검증을 하나로 처리하는 함수
