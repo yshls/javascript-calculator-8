@@ -12,6 +12,9 @@ class App {
         Console.print('결과 : 0');
         return;
       }
+
+      // 3번 & 4번 로직 호출 및 반환 값 받음
+      const splitNumberString = this.processAndValidate(input);
     } catch (error) {}
   }
   // 3. 문자열 파싱 & 4. 유효성 검증을 하나로 처리하는 함수
