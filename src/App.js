@@ -48,6 +48,31 @@ class App {
     // 모든 구분자를 하나로 합친다.
     const combineSeparator = new RegExp(`[${allSeparator.join('')}]`);
     const splitNumberString = numberString.split(combineSeparator);
+
+    // 4. 유효성 검증
+    const negativeNum = []; // 음수 모으는 배열
+
+    splitNumberString.forEach((str) => {
+      const num = Number(str); // 문자열 -> 숫자
+
+      //   숫자 아닌 문자 확인
+      if (Number.isNaN(num)) {
+        throw new Error('[ERROR] 숫자가 아닌 문자가 포함되어 있습니다.');
+      }
+
+      //   음수 확인
+      if (num < 0) {
+        negativeNum.push(num);
+      }
+    });
+
+    if (negativeNum.length > 0) {
+      throw new Error(
+        `[ERROR] 음수는 허용되지 않습니다: ${negativeNum.join(', ')}`
+      );
+    }
+
+    return splitNumberString;
   }
 }
 
