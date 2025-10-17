@@ -23,7 +23,10 @@ class App {
 
       // 출력
       Console.print(`결과 : ${sum}`);
-    } catch (error) {}
+    } catch (error) {
+      // 4. 에러 메시지 출력
+      Console.print(error.message);
+    }
   }
   // 3. 문자열 파싱 & 4. 유효성 검증을 하나로 처리하는 함수
   processAndValidate(userInputString) {
