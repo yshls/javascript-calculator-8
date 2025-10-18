@@ -26,6 +26,7 @@ class App {
     } catch (error) {
       // 4. 에러 메시지 출력
       Console.print(error.message);
+      throw error;
     }
   }
   // 3. 문자열 파싱 & 4. 유효성 검증을 하나로 처리하는 함수
@@ -37,7 +38,7 @@ class App {
 
     // 커스텀 구분자
     const customSeparatorStart = '//';
-    const customSeparatorEnd = '\n';
+    const customSeparatorEnd = '\\n';
 
     // 커스텀 구분자인지 확인하기
     if (
@@ -56,22 +57,26 @@ class App {
       allSeparator.push(customSeparator); // 최종 목록에 합치기
 
       //   숫자만 남기기
-      numberString = userInputString.substring(endPosition + 1);
+      numberString = userInputString.substring(
+        endPosition + customSeparatorEnd.length
+      );
     }
 
-    // 모든 구분자를 하나로 합친다.
+    // 모든 구분자를 하나로 합치기
     const combineSeparator = new RegExp(`[${allSeparator.join('')}]`);
     const splitNumberString = numberString.split(combineSeparator);
+    // 분리된 배열에서 빈 문자열 제거
+    const filteredNumberString = splitNumberString.filter((str) => str !== '');
 
     // 4. 유효성 검증
     const negativeNum = []; // 음수 모으는 배열
 
-    splitNumberString.forEach((str) => {
+    filteredNumberString.forEach((str) => {
       const num = Number(str); // 문자열 -> 숫자
 
       //   숫자 아닌 문자 확인
       if (Number.isNaN(num)) {
-        throw new Error('[ERROR] 숫자가 아닌 문자가 포함되어 있습니다.');
+        throw new Error('[ERROR]');
       }
 
       //   음수 확인
@@ -81,12 +86,10 @@ class App {
     });
 
     if (negativeNum.length > 0) {
-      throw new Error(
-        `[ERROR] 음수는 허용되지 않습니다: ${negativeNum.join(', ')}`
-      );
+      throw new Error('[ERROR]');
     }
 
-    return splitNumberString;
+    return filteredNumberString;
   }
 }
 
